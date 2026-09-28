@@ -102,3 +102,4 @@ npm run dev
 | `GET` | `/api/memory/timeline` | Chronological security knowledge timeline |
 | `POST` | `/api/demo/run-story` | Runs the full 10-step demo story via API |
 | `GET` | `/api/health` | Health check for memory engine and LLM provider |
+# Devops
