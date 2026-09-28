@@ -1,0 +1,207 @@
+{
+  "world": [
+    {
+      "id": "world-439e2f29",
+      "bank_id": "secops-org-memory",
+      "network_type": "world",
+      "content": "Standard organizational access control requires SOC2-CC6.1, NIST-PR.AC-04, and ISO-A.5.15 compliance across all production assets.",
+      "entities": [
+        "SOC2-CC6.1",
+        "NIST-PR.AC-04",
+        "Access Control"
+      ],
+      "tags": [
+        "baseline",
+        "policy"
+      ],
+      "metadata": {
+        "frameworks": [
+          "SOC2",
+          "NIST_CSF",
+          "ISO27001"
+        ]
+      },
+      "confidence": 1.0,
+      "created_at": "2026-09-28T10:49:19.321679"
+    },
+    {
+      "id": "world-36a49b86",
+      "bank_id": "secops-org-memory",
+      "network_type": "world",
+      "content": "Production cloud storage assets must maintain S3 Public Access Block enabled at all times with KMS encryption enabled.",
+      "entities": [
+        "cloud_storage",
+        "S3",
+        "Data Protection"
+      ],
+      "tags": [
+        "baseline",
+        "policy"
+      ],
+      "metadata": {
+        "policy": "zero-public-storage"
+      },
+      "confidence": 1.0,
+      "created_at": "2026-09-28T10:49:19.321697"
+    },
+    {
+      "id": "world-b20d4a5f",
+      "bank_id": "secops-org-memory",
+      "network_type": "world",
+      "content": "Any production incident involving publicly readable customer data is classified as Severity HIGH or CRITICAL.",
+      "entities": [
+        "Severity",
+        "S3",
+        "customer-data"
+      ],
+      "tags": [
+        "baseline",
+        "policy"
+      ],
+      "metadata": {
+        "classification_rule": "customer_data_public"
+      },
+      "confidence": 1.0,
+      "created_at": "2026-09-28T10:49:19.321706"
+    }
+  ],
+  "experience": [
+    {
+      "id": "experience-b1761a4ba9",
+      "bank_id": "secops-org-memory",
+      "network_type": "experience",
+      "content": "Incident INC-1024 [Public Cloud Storage Exposure] on asset 'customer-data-bucket'. Severity: HIGH. Root Cause: The incident was caused by an access policy misconfiguration on target resource 'customer-data-bucket'. The configuration permitted unauthenticated access contrary to organizational baseline policies.. Controls violated: ['SOC2-CC6.1', 'NIST-PR.AC-04', 'ISO-A.5.15', 'SOC2-CC6.6']. Remediations executed: ['Remove public read and write access grants from bucket ACL and policy', 'Enable preventive cloud protection and account-level Guardrail', 'Review and restrict IAM policies attached to service roles and pipelines', 'Enable automated compliance monitoring and real-time alerts']. Evidence hashes: ['97619272b0ce5480', 'eb13eb2f60a73f95', 'e8a2000d449e6469'].",
+      "entities": [
+        "INC-1024",
+        "customer-data-bucket",
+        "cloud_storage",
+        "Access Control"
+      ],
+      "tags": [
+        "incident",
+        "high",
+        "cloud_storage"
+      ],
+      "metadata": {
+        "incident_id": "INC-1024",
+        "title": "Public Cloud Storage Exposure",
+        "asset": "customer-data-bucket",
+        "asset_type": "cloud_storage",
+        "root_cause": "The incident was caused by an access policy misconfiguration on target resource 'customer-data-bucket'. The configuration permitted unauthenticated access contrary to organizational baseline policies.",
+        "root_cause_category": "Access Policy Misconfiguration",
+        "controls": [
+          "SOC2-CC6.1",
+          "NIST-PR.AC-04",
+          "ISO-A.5.15",
+          "SOC2-CC6.6"
+        ],
+        "remediations": [
+          "Remove public read and write access grants from bucket ACL and policy",
+          "Enable preventive cloud protection and account-level Guardrail",
+          "Review and restrict IAM policies attached to service roles and pipelines",
+          "Enable automated compliance monitoring and real-time alerts"
+        ],
+        "evidence_ids": [
+          "EVD-INC-1024-SCAN",
+          "EVD-INC-1024-CFG",
+          "EVD-INC-1024-REMED"
+        ]
+      },
+      "confidence": 1.0,
+      "created_at": "2026-09-28T10:49:19.322094"
+    },
+    {
+      "id": "experience-81d3876681",
+      "bank_id": "secops-org-memory",
+      "network_type": "experience",
+      "content": "Incident INC-1038 [Customer Analytics Cloud Storage Exposure] on asset 'analytics-data-bucket'. Severity: HIGH. Root Cause: The incident was caused by an access policy misconfiguration on target resource 'analytics-data-bucket'. The configuration permitted unauthenticated access contrary to organizational baseline policies.. Controls violated: ['SOC2-CC6.1', 'NIST-PR.AC-04', 'ISO-A.5.15', 'SOC2-CC6.6']. Remediations executed: ['Remove public read and write access grants from bucket ACL and policy', 'Enable preventive cloud protection and account-level Guardrail', 'Review and restrict IAM policies attached to service roles and pipelines', 'Enable automated compliance monitoring and real-time alerts']. Evidence hashes: ['c3e197ef5c312daf', 'ca4d4f3f6b65ba1a', 'e8a2000d449e6469'].",
+      "entities": [
+        "INC-1038",
+        "analytics-data-bucket",
+        "cloud_storage",
+        "Access Control"
+      ],
+      "tags": [
+        "incident",
+        "high",
+        "cloud_storage"
+      ],
+      "metadata": {
+        "incident_id": "INC-1038",
+        "title": "Customer Analytics Cloud Storage Exposure",
+        "asset": "analytics-data-bucket",
+        "asset_type": "cloud_storage",
+        "root_cause": "The incident was caused by an access policy misconfiguration on target resource 'analytics-data-bucket'. The configuration permitted unauthenticated access contrary to organizational baseline policies.",
+        "root_cause_category": "Access Policy Misconfiguration",
+        "controls": [
+          "SOC2-CC6.1",
+          "NIST-PR.AC-04",
+          "ISO-A.5.15",
+          "SOC2-CC6.6"
+        ],
+        "remediations": [
+          "Remove public read and write access grants from bucket ACL and policy",
+          "Enable preventive cloud protection and account-level Guardrail",
+          "Review and restrict IAM policies attached to service roles and pipelines",
+          "Enable automated compliance monitoring and real-time alerts"
+        ],
+        "evidence_ids": [
+          "EVD-INC-1038-SCAN",
+          "EVD-INC-1038-CFG",
+          "EVD-INC-1038-REMED"
+        ]
+      },
+      "confidence": 1.0,
+      "created_at": "2026-09-28T10:49:19.323085"
+    }
+  ],
+  "observation": [
+    {
+      "id": "obs-fa442776",
+      "bank_id": "secops-org-memory",
+      "network_type": "observation",
+      "content": "Synthesized Pattern: Repeated occurrence of 'The incident was caused by an access policy misconfiguration on target resource 'analytics-data-bucket'. The configuration permitted unauthenticated access contrary to organizational baseline policies.' affecting asset class 'cloud_storage'. Incident INC-1038 matches historical pattern from INC-1024. Indicates access control misconfiguration is not an isolated event.",
+      "entities": [
+        "INC-1038",
+        "INC-1024",
+        "cloud_storage",
+        "Access Control"
+      ],
+      "tags": [
+        "recurring_pattern",
+        "root_cause_cluster"
+      ],
+      "metadata": {
+        "pattern": "repeated_access_policy_exposure",
+        "incidents": [
+          "INC-1024",
+          "INC-1038"
+        ]
+      },
+      "confidence": 0.95,
+      "created_at": "2026-09-28T10:49:19.323569"
+    }
+  ],
+  "opinion": [
+    {
+      "id": "op-bddb5e55",
+      "bank_id": "secops-org-memory",
+      "network_type": "opinion",
+      "content": "Organizational Belief: Cloud storage access policy configurations carry high human-error risk. Manual configuration reviews are ineffective for cloud_storage; automated preventive guardrails are required.",
+      "entities": [
+        "cloud_storage",
+        "Policy Guardrails",
+        "Access Control"
+      ],
+      "tags": [
+        "organizational_belief",
+        "risk_posture"
+      ],
+      "metadata": {
+        "risk_score": 0.85
+      },
+      "confidence": 0.88,
+      "created_at": "2026-09-28T10:49:19.323581"
+    }
+  ]
+}
