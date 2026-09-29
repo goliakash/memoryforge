@@ -1,0 +1,417 @@
+{
+  "INC-1024": {
+    "id": "INC-1024",
+    "title": "Public Cloud Storage Exposure",
+    "description": "A production storage bucket was discovered with public read access. Configuration scan detected unauthenticated principal '*'.",
+    "severity": "HIGH",
+    "affected_asset": "customer-data-bucket",
+    "asset_type": "Cloud Storage",
+    "environment": "Production",
+    "raw_evidence": "CloudWatch Alert: S3BucketPublicReadAccess. Asset: customer-data-bucket. Principal: *",
+    "detected_at": "2026-09-29T04:38:41.931065Z",
+    "status": "REMEDIATED",
+    "root_cause": "Incorrect access policy and missing bucket-level PublicAccessBlock configuration.",
+    "controls": [
+      {
+        "framework": "SOC 2 Type II",
+        "control_id": "CC6.1",
+        "control_name": "Logical Access Security Controls",
+        "requirement": "The entity restricts logical access to confidential information assets and storage to authorized users only.",
+        "audit_status": "AUDITED_REMEDIATED"
+      },
+      {
+        "framework": "SOC 2 Type II",
+        "control_id": "CC6.3",
+        "control_name": "Role-Based Access Enforcement",
+        "requirement": "Role-based access permissions are provisioned according to the principle of least privilege.",
+        "audit_status": "AUDITED_REMEDIATED"
+      },
+      {
+        "framework": "NIST CSF 2.0",
+        "control_id": "PR.AC-3",
+        "control_name": "Access Control Enforcement",
+        "requirement": "Access permissions and authorizations are managed, incorporating least privilege and separation of duties.",
+        "audit_status": "AUDITED_REMEDIATED"
+      },
+      {
+        "framework": "SOC 2 Type II",
+        "control_id": "CC6.7",
+        "control_name": "Data Transmission & Storage Protection",
+        "requirement": "The entity implements controls to prevent unauthorized disclosure of sensitive data.",
+        "audit_status": "AUDITED_REMEDIATED"
+      },
+      {
+        "framework": "NIST CSF 2.0",
+        "control_id": "PR.DS-1",
+        "control_name": "Data-at-Rest Protection",
+        "requirement": "Data-at-rest is protected using authenticated encryption and strict key policies.",
+        "audit_status": "AUDITED_REMEDIATED"
+      },
+      {
+        "framework": "SOC 2 Type II",
+        "control_id": "CC7.2",
+        "control_name": "Security Incident Remediation & Post-Mortem",
+        "requirement": "Security incidents are tracked, investigated, remediated, and subjected to post-incident analysis.",
+        "audit_status": "AUDITED_REMEDIATED"
+      }
+    ],
+    "remediation_playbook": [
+      {
+        "id": "REM-INC-1024-01",
+        "step_number": 1,
+        "action": "Remove public access ACLs and apply PublicAccessBlock to 'customer-data-bucket'.",
+        "rationale": "Immediate containment to stop active data exposure.",
+        "status": "VERIFIED",
+        "verification_command": "aws s3api put-public-access-block --bucket customer-data-bucket --public-access-block-configuration BlockPublicAcls=true,IgnorePublicAcls=true,BlockPublicPolicy=true,RestrictPublicBuckets=true"
+      },
+      {
+        "id": "REM-INC-1024-02",
+        "step_number": 2,
+        "action": "Enable account-level S3 Block Public Access preventive protection.",
+        "rationale": "Prevents downstream creation of public storage buckets by any engineer.",
+        "status": "VERIFIED",
+        "verification_command": "aws s3control put-public-access-block --account-id $AWS_ACCOUNT_ID"
+      },
+      {
+        "id": "REM-INC-1024-03",
+        "step_number": 3,
+        "action": "Review IAM policies and revoke unauthorized wildcard principals.",
+        "rationale": "Enforces least-privilege role boundaries.",
+        "status": "VERIFIED",
+        "verification_command": "aws s3api get-bucket-policy --bucket customer-data-bucket"
+      },
+      {
+        "id": "REM-INC-1024-04",
+        "step_number": 4,
+        "action": "Enable CloudTrail S3 Data Events & AWS Config automated drift detection rule.",
+        "rationale": "Provides real-time alerting if policy alterations recur.",
+        "status": "VERIFIED",
+        "verification_command": "aws configservice put-evaluations"
+      }
+    ],
+    "evidence_vault": [
+      {
+        "id": "EV-INC-1024-01",
+        "filename": "config_snapshot_customer-data-bucket.json",
+        "type": "Configuration Snapshot",
+        "description": "Automated configuration scan showing public access state on customer-data-bucket.",
+        "content_preview": "Asset: customer-data-bucket\nTimestamp: 2026-09-29T04:38:41.930994\nPublicReadAccess: True\nPolicyStatus: 'Principal': '*'\nEncryptionAtRest: Enabled (AES-256)",
+        "sha256_hash": "73c1300867865e3995d44cb5a3ad542843b4c0ef689fff89356fb6ba52b6e49f",
+        "timestamp": "2026-09-29T04:38:41.931023Z"
+      },
+      {
+        "id": "EV-INC-1024-02",
+        "filename": "security_finding_INC-1024.log",
+        "type": "Security Scanner Finding",
+        "description": "Security Hub / CSPM finding triggering the initial incident alert.",
+        "content_preview": "FindingID: SEC-HUB-WARN-INC-1024\nRule: CIS AWS 2.1.5 - S3 Public Read Disabled\nSeverity: HIGH\nRemediationURL: https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html",
+        "sha256_hash": "c1b63075e79658d5d4b748f8645a91be3f3f38a9090ba4d2e3f0aaac9ca51513",
+        "timestamp": "2026-09-29T04:38:41.931032Z"
+      },
+      {
+        "id": "EV-INC-1024-03",
+        "filename": "cloudtrail_audit_extract_INC-1024.log",
+        "type": "Audit & Access Log",
+        "description": "Access logs capturing exposure timeline and subsequent remediation confirmation.",
+        "content_preview": "2026-09-28T18:12:04Z customer-data-bucket GET /index.html 200 AnonymousCaller\n2026-09-28T18:14:22Z customer-data-bucket GET /metadata.json 200 AnonymousCaller\n2026-09-28T18:15:00Z RemediationApplied BlockPublicAccess=True Status=SUCCESS",
+        "sha256_hash": "5932d389684c706bc08e505a651b3962594782a2aa3a729c85d888a75311645b",
+        "timestamp": "2026-09-29T04:38:41.931037Z"
+      }
+    ],
+    "post_mortem": {
+      "summary": "Incident INC-1024 (Public Cloud Storage Exposure) affected asset 'customer-data-bucket'. Root cause was determined as: Incorrect access policy and missing bucket-level PublicAccessBlock configuration.. Remediation completed with 4 verified containment actions.",
+      "root_cause_analysis": "Detailed RCA: The resource 'customer-data-bucket' was provisioned or updated with an overly permissive resource-based policy. Lack of mandatory policy-as-code linting allowed this change into the Production environment. ",
+      "preventive_actions": [
+        "Implement pre-commit Terraform Checkov / tfsec scans in CI/CD pipeline.",
+        "Enforce AWS Organization SCP (Service Control Policy) banning public bucket policies.",
+        "Conduct automated weekly IAM permissions review."
+      ],
+      "lessons_learned": [
+        "Hindsight memory recall accelerates root cause identification from hours to seconds.",
+        "Organizational memory ensures proven remediation playbooks are reused rather than reinvented.",
+        "Evidence artifacts must be cryptographically hashed for audit defensibility."
+      ],
+      "timeline": [
+        {
+          "time": "T+00m",
+          "event": "Configuration scan detects public access vulnerability."
+        },
+        {
+          "time": "T+02m",
+          "event": "Incident Agent ingested finding & queried Hindsight memory."
+        },
+        {
+          "time": "T+03m",
+          "event": "Root cause analyzed & verified remediation playbook deployed."
+        },
+        {
+          "time": "T+05m",
+          "event": "Evidence captured & committed to compliance vault."
+        }
+      ]
+    },
+    "memory_retained": true,
+    "retained_at": null,
+    "recalled_from_id": null,
+    "similarity_score": null,
+    "investigation_notes": ""
+  },
+  "INC-1012": {
+    "id": "INC-1012",
+    "title": "Unrestricted SSH Port 22 Ingress",
+    "description": "Security group sg-0a8b9f for backend bastion host permitted 0.0.0.0/0 ingress on port 22.",
+    "severity": "HIGH",
+    "affected_asset": "prod-bastion-sg",
+    "asset_type": "Network Security Group",
+    "environment": "Production",
+    "raw_evidence": "GuardDuty Alert: UnauthorizedAccess:EC2/SSHBruteForce. Ingress: 0.0.0.0/0:22",
+    "detected_at": "2026-09-29T04:38:41.933331Z",
+    "status": "REMEDIATED",
+    "root_cause": "Permissive security group ingress rule allowing 0.0.0.0/0 on sensitive administrative port.",
+    "controls": [
+      {
+        "framework": "SOC 2 Type II",
+        "control_id": "CC7.2",
+        "control_name": "Security Incident Remediation & Post-Mortem",
+        "requirement": "Security incidents are tracked, investigated, remediated, and subjected to post-incident analysis.",
+        "audit_status": "AUDITED_REMEDIATED"
+      }
+    ],
+    "remediation_playbook": [
+      {
+        "id": "REM-INC-1012-01",
+        "step_number": 1,
+        "action": "Remove public access ACLs and apply PublicAccessBlock to 'prod-bastion-sg'.",
+        "rationale": "Immediate containment to stop active data exposure.",
+        "status": "VERIFIED",
+        "verification_command": "aws s3api put-public-access-block --bucket prod-bastion-sg --public-access-block-configuration BlockPublicAcls=true,IgnorePublicAcls=true,BlockPublicPolicy=true,RestrictPublicBuckets=true"
+      },
+      {
+        "id": "REM-INC-1012-02",
+        "step_number": 2,
+        "action": "Enable account-level S3 Block Public Access preventive protection.",
+        "rationale": "Prevents downstream creation of public storage buckets by any engineer.",
+        "status": "VERIFIED",
+        "verification_command": "aws s3control put-public-access-block --account-id $AWS_ACCOUNT_ID"
+      },
+      {
+        "id": "REM-INC-1012-03",
+        "step_number": 3,
+        "action": "Review IAM policies and revoke unauthorized wildcard principals.",
+        "rationale": "Enforces least-privilege role boundaries.",
+        "status": "VERIFIED",
+        "verification_command": "aws s3api get-bucket-policy --bucket prod-bastion-sg"
+      },
+      {
+        "id": "REM-INC-1012-04",
+        "step_number": 4,
+        "action": "Enable CloudTrail S3 Data Events & AWS Config automated drift detection rule.",
+        "rationale": "Provides real-time alerting if policy alterations recur.",
+        "status": "VERIFIED",
+        "verification_command": "aws configservice put-evaluations"
+      }
+    ],
+    "evidence_vault": [
+      {
+        "id": "EV-INC-1012-01",
+        "filename": "config_snapshot_prod-bastion-sg.json",
+        "type": "Configuration Snapshot",
+        "description": "Automated configuration scan showing public access state on prod-bastion-sg.",
+        "content_preview": "Asset: prod-bastion-sg\nTimestamp: 2026-09-29T04:38:41.933303\nPublicReadAccess: True\nPolicyStatus: 'Principal': '*'\nEncryptionAtRest: Enabled (AES-256)",
+        "sha256_hash": "20eedbfa3479617e83344485f305ba305c6039886462097b977c86f7b14cd9e4",
+        "timestamp": "2026-09-29T04:38:41.933312Z"
+      },
+      {
+        "id": "EV-INC-1012-02",
+        "filename": "security_finding_INC-1012.log",
+        "type": "Security Scanner Finding",
+        "description": "Security Hub / CSPM finding triggering the initial incident alert.",
+        "content_preview": "FindingID: SEC-HUB-WARN-INC-1012\nRule: CIS AWS 2.1.5 - S3 Public Read Disabled\nSeverity: HIGH\nRemediationURL: https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html",
+        "sha256_hash": "9967e78ed35a3a5d9af200bc87631d1a79c39b09df318a9061fce6f7d16c45a6",
+        "timestamp": "2026-09-29T04:38:41.933318Z"
+      },
+      {
+        "id": "EV-INC-1012-03",
+        "filename": "cloudtrail_audit_extract_INC-1012.log",
+        "type": "Audit & Access Log",
+        "description": "Access logs capturing exposure timeline and subsequent remediation confirmation.",
+        "content_preview": "2026-09-28T18:12:04Z prod-bastion-sg GET /index.html 200 AnonymousCaller\n2026-09-28T18:14:22Z prod-bastion-sg GET /metadata.json 200 AnonymousCaller\n2026-09-28T18:15:00Z RemediationApplied BlockPublicAccess=True Status=SUCCESS",
+        "sha256_hash": "63a9d2289ff9e09b77c89353543e76da70f447d15c64975087e872e44154d4aa",
+        "timestamp": "2026-09-29T04:38:41.933322Z"
+      }
+    ],
+    "post_mortem": {
+      "summary": "Incident INC-1012 (Unrestricted SSH Port 22 Ingress) affected asset 'prod-bastion-sg'. Root cause was determined as: Permissive security group ingress rule allowing 0.0.0.0/0 on sensitive administrative port.. Remediation completed with 4 verified containment actions.",
+      "root_cause_analysis": "Detailed RCA: The resource 'prod-bastion-sg' was provisioned or updated with an overly permissive resource-based policy. Lack of mandatory policy-as-code linting allowed this change into the Production environment. ",
+      "preventive_actions": [
+        "Implement pre-commit Terraform Checkov / tfsec scans in CI/CD pipeline.",
+        "Enforce AWS Organization SCP (Service Control Policy) banning public bucket policies.",
+        "Conduct automated weekly IAM permissions review."
+      ],
+      "lessons_learned": [
+        "Hindsight memory recall accelerates root cause identification from hours to seconds.",
+        "Organizational memory ensures proven remediation playbooks are reused rather than reinvented.",
+        "Evidence artifacts must be cryptographically hashed for audit defensibility."
+      ],
+      "timeline": [
+        {
+          "time": "T+00m",
+          "event": "Configuration scan detects public access vulnerability."
+        },
+        {
+          "time": "T+02m",
+          "event": "Incident Agent ingested finding & queried Hindsight memory."
+        },
+        {
+          "time": "T+03m",
+          "event": "Root cause analyzed & verified remediation playbook deployed."
+        },
+        {
+          "time": "T+05m",
+          "event": "Evidence captured & committed to compliance vault."
+        }
+      ]
+    },
+    "memory_retained": true,
+    "retained_at": null,
+    "recalled_from_id": null,
+    "similarity_score": null,
+    "investigation_notes": ""
+  },
+  "INC-1018": {
+    "id": "INC-1018",
+    "title": "Production Stripe API Secret Exposed in Logs",
+    "description": "Application container logged unredacted Stripe API authorization token to CloudWatch log stream.",
+    "severity": "CRITICAL",
+    "affected_asset": "billing-service-worker",
+    "asset_type": "Microservice / Container",
+    "environment": "Production",
+    "raw_evidence": "SecretScanner: Matched pattern 'sk_live_[0-9a-zA-Z]{24}' in /aws/lambda/billing-processor",
+    "detected_at": "2026-09-29T04:38:41.935226Z",
+    "status": "REMEDIATED",
+    "root_cause": "Misconfigured IAM authorization policy allowing unauthenticated principal access.",
+    "controls": [
+      {
+        "framework": "SOC 2 Type II",
+        "control_id": "CC6.7",
+        "control_name": "Data Transmission & Storage Protection",
+        "requirement": "The entity implements controls to prevent unauthorized disclosure of sensitive data.",
+        "audit_status": "AUDITED_REMEDIATED"
+      },
+      {
+        "framework": "NIST CSF 2.0",
+        "control_id": "PR.DS-1",
+        "control_name": "Data-at-Rest Protection",
+        "requirement": "Data-at-rest is protected using authenticated encryption and strict key policies.",
+        "audit_status": "AUDITED_REMEDIATED"
+      },
+      {
+        "framework": "SOC 2 Type II",
+        "control_id": "CC7.2",
+        "control_name": "Security Incident Remediation & Post-Mortem",
+        "requirement": "Security incidents are tracked, investigated, remediated, and subjected to post-incident analysis.",
+        "audit_status": "AUDITED_REMEDIATED"
+      }
+    ],
+    "remediation_playbook": [
+      {
+        "id": "REM-INC-1018-01",
+        "step_number": 1,
+        "action": "Remove public access ACLs and apply PublicAccessBlock to 'billing-service-worker'.",
+        "rationale": "Immediate containment to stop active data exposure.",
+        "status": "VERIFIED",
+        "verification_command": "aws s3api put-public-access-block --bucket billing-service-worker --public-access-block-configuration BlockPublicAcls=true,IgnorePublicAcls=true,BlockPublicPolicy=true,RestrictPublicBuckets=true"
+      },
+      {
+        "id": "REM-INC-1018-02",
+        "step_number": 2,
+        "action": "Enable account-level S3 Block Public Access preventive protection.",
+        "rationale": "Prevents downstream creation of public storage buckets by any engineer.",
+        "status": "VERIFIED",
+        "verification_command": "aws s3control put-public-access-block --account-id $AWS_ACCOUNT_ID"
+      },
+      {
+        "id": "REM-INC-1018-03",
+        "step_number": 3,
+        "action": "Review IAM policies and revoke unauthorized wildcard principals.",
+        "rationale": "Enforces least-privilege role boundaries.",
+        "status": "VERIFIED",
+        "verification_command": "aws s3api get-bucket-policy --bucket billing-service-worker"
+      },
+      {
+        "id": "REM-INC-1018-04",
+        "step_number": 4,
+        "action": "Enable CloudTrail S3 Data Events & AWS Config automated drift detection rule.",
+        "rationale": "Provides real-time alerting if policy alterations recur.",
+        "status": "VERIFIED",
+        "verification_command": "aws configservice put-evaluations"
+      }
+    ],
+    "evidence_vault": [
+      {
+        "id": "EV-INC-1018-01",
+        "filename": "config_snapshot_billing-service-worker.json",
+        "type": "Configuration Snapshot",
+        "description": "Automated configuration scan showing public access state on billing-service-worker.",
+        "content_preview": "Asset: billing-service-worker\nTimestamp: 2026-09-29T04:38:41.935200\nPublicReadAccess: True\nPolicyStatus: 'Principal': '*'\nEncryptionAtRest: Enabled (AES-256)",
+        "sha256_hash": "11b0c1700cf4eead9752d652a6bac6dbdb20cdc4f97131f8fd4eab28a68ca9a2",
+        "timestamp": "2026-09-29T04:38:41.935208Z"
+      },
+      {
+        "id": "EV-INC-1018-02",
+        "filename": "security_finding_INC-1018.log",
+        "type": "Security Scanner Finding",
+        "description": "Security Hub / CSPM finding triggering the initial incident alert.",
+        "content_preview": "FindingID: SEC-HUB-WARN-INC-1018\nRule: CIS AWS 2.1.5 - S3 Public Read Disabled\nSeverity: CRITICAL\nRemediationURL: https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html",
+        "sha256_hash": "8e6292e0e32044b7e8c8cd41be687939941bf1814fdc7b99ad90b8ec999a7f69",
+        "timestamp": "2026-09-29T04:38:41.935213Z"
+      },
+      {
+        "id": "EV-INC-1018-03",
+        "filename": "cloudtrail_audit_extract_INC-1018.log",
+        "type": "Audit & Access Log",
+        "description": "Access logs capturing exposure timeline and subsequent remediation confirmation.",
+        "content_preview": "2026-09-28T18:12:04Z billing-service-worker GET /index.html 200 AnonymousCaller\n2026-09-28T18:14:22Z billing-service-worker GET /metadata.json 200 AnonymousCaller\n2026-09-28T18:15:00Z RemediationApplied BlockPublicAccess=True Status=SUCCESS",
+        "sha256_hash": "d74d2e0efb1e7b9f37b8105ae9c34c92f816c504037f5e0df551c6fa7e8c8473",
+        "timestamp": "2026-09-29T04:38:41.935217Z"
+      }
+    ],
+    "post_mortem": {
+      "summary": "Incident INC-1018 (Production Stripe API Secret Exposed in Logs) affected asset 'billing-service-worker'. Root cause was determined as: Misconfigured IAM authorization policy allowing unauthenticated principal access.. Remediation completed with 4 verified containment actions.",
+      "root_cause_analysis": "Detailed RCA: The resource 'billing-service-worker' was provisioned or updated with an overly permissive resource-based policy. Lack of mandatory policy-as-code linting allowed this change into the Production environment. ",
+      "preventive_actions": [
+        "Implement pre-commit Terraform Checkov / tfsec scans in CI/CD pipeline.",
+        "Enforce AWS Organization SCP (Service Control Policy) banning public bucket policies.",
+        "Conduct automated weekly IAM permissions review."
+      ],
+      "lessons_learned": [
+        "Hindsight memory recall accelerates root cause identification from hours to seconds.",
+        "Organizational memory ensures proven remediation playbooks are reused rather than reinvented.",
+        "Evidence artifacts must be cryptographically hashed for audit defensibility."
+      ],
+      "timeline": [
+        {
+          "time": "T+00m",
+          "event": "Configuration scan detects public access vulnerability."
+        },
+        {
+          "time": "T+02m",
+          "event": "Incident Agent ingested finding & queried Hindsight memory."
+        },
+        {
+          "time": "T+03m",
+          "event": "Root cause analyzed & verified remediation playbook deployed."
+        },
+        {
+          "time": "T+05m",
+          "event": "Evidence captured & committed to compliance vault."
+        }
+      ]
+    },
+    "memory_retained": true,
+    "retained_at": null,
+    "recalled_from_id": null,
+    "similarity_score": null,
+    "investigation_notes": ""
+  }
+}

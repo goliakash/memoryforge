@@ -1,0 +1,568 @@
+{
+  "nodes": {
+    "node_inc_INC-1024": {
+      "id": "node_inc_INC-1024",
+      "type": "INCIDENT",
+      "label": "INC-1024: Public Cloud Storage Exposure",
+      "details": {
+        "incident_id": "INC-1024",
+        "severity": "HIGH",
+        "asset": "customer-data-bucket",
+        "status": "REMEDIATED"
+      },
+      "incident_id": "INC-1024",
+      "tags": [
+        "incident",
+        "HIGH"
+      ],
+      "created_at": "2026-09-29T04:38:41.931631Z"
+    },
+    "node_rc_INC-1024": {
+      "id": "node_rc_INC-1024",
+      "type": "ROOT_CAUSE",
+      "label": "Root Cause (INC-1024): Incorrect access policy and missing bucket-le...",
+      "details": {
+        "full_text": "Incorrect access policy and missing bucket-level PublicAccessBlock configuration."
+      },
+      "incident_id": "INC-1024",
+      "tags": [
+        "root_cause"
+      ],
+      "created_at": "2026-09-29T04:38:41.931638Z"
+    },
+    "node_ctrl_CC6.1": {
+      "id": "node_ctrl_CC6.1",
+      "type": "CONTROL",
+      "label": "SOC 2 Type II CC6.1",
+      "details": {
+        "framework": "SOC 2 Type II",
+        "control_id": "CC6.1",
+        "control_name": "Logical Access Security Controls",
+        "requirement": "The entity restricts logical access to confidential information assets and storage to authorized users only."
+      },
+      "incident_id": "INC-1024",
+      "tags": [
+        "control",
+        "soc 2 type ii"
+      ],
+      "created_at": "2026-09-29T04:38:41.931646Z"
+    },
+    "node_ctrl_CC6.3": {
+      "id": "node_ctrl_CC6.3",
+      "type": "CONTROL",
+      "label": "SOC 2 Type II CC6.3",
+      "details": {
+        "framework": "SOC 2 Type II",
+        "control_id": "CC6.3",
+        "control_name": "Role-Based Access Enforcement",
+        "requirement": "Role-based access permissions are provisioned according to the principle of least privilege."
+      },
+      "incident_id": "INC-1024",
+      "tags": [
+        "control",
+        "soc 2 type ii"
+      ],
+      "created_at": "2026-09-29T04:38:41.931652Z"
+    },
+    "node_ctrl_PR.AC-3": {
+      "id": "node_ctrl_PR.AC-3",
+      "type": "CONTROL",
+      "label": "NIST CSF 2.0 PR.AC-3",
+      "details": {
+        "framework": "NIST CSF 2.0",
+        "control_id": "PR.AC-3",
+        "control_name": "Access Control Enforcement",
+        "requirement": "Access permissions and authorizations are managed, incorporating least privilege and separation of duties."
+      },
+      "incident_id": "INC-1024",
+      "tags": [
+        "control",
+        "nist csf 2.0"
+      ],
+      "created_at": "2026-09-29T04:38:41.931658Z"
+    },
+    "node_ctrl_CC6.7": {
+      "id": "node_ctrl_CC6.7",
+      "type": "CONTROL",
+      "label": "SOC 2 Type II CC6.7",
+      "details": {
+        "framework": "SOC 2 Type II",
+        "control_id": "CC6.7",
+        "control_name": "Data Transmission & Storage Protection",
+        "requirement": "The entity implements controls to prevent unauthorized disclosure of sensitive data."
+      },
+      "incident_id": "INC-1024",
+      "tags": [
+        "control",
+        "soc 2 type ii"
+      ],
+      "created_at": "2026-09-29T04:38:41.931664Z"
+    },
+    "node_ctrl_PR.DS-1": {
+      "id": "node_ctrl_PR.DS-1",
+      "type": "CONTROL",
+      "label": "NIST CSF 2.0 PR.DS-1",
+      "details": {
+        "framework": "NIST CSF 2.0",
+        "control_id": "PR.DS-1",
+        "control_name": "Data-at-Rest Protection",
+        "requirement": "Data-at-rest is protected using authenticated encryption and strict key policies."
+      },
+      "incident_id": "INC-1024",
+      "tags": [
+        "control",
+        "nist csf 2.0"
+      ],
+      "created_at": "2026-09-29T04:38:41.931669Z"
+    },
+    "node_ctrl_CC7.2": {
+      "id": "node_ctrl_CC7.2",
+      "type": "CONTROL",
+      "label": "SOC 2 Type II CC7.2",
+      "details": {
+        "framework": "SOC 2 Type II",
+        "control_id": "CC7.2",
+        "control_name": "Security Incident Remediation & Post-Mortem",
+        "requirement": "Security incidents are tracked, investigated, remediated, and subjected to post-incident analysis."
+      },
+      "incident_id": "INC-1024",
+      "tags": [
+        "control",
+        "soc 2 type ii"
+      ],
+      "created_at": "2026-09-29T04:38:41.931674Z"
+    },
+    "node_rem_INC-1024": {
+      "id": "node_rem_INC-1024",
+      "type": "REMEDIATION",
+      "label": "Playbook (INC-1024): 4 Actions",
+      "details": {
+        "steps": [
+          "Remove public access ACLs and apply PublicAccessBlock to 'customer-data-bucket'.",
+          "Enable account-level S3 Block Public Access preventive protection.",
+          "Review IAM policies and revoke unauthorized wildcard principals."
+        ]
+      },
+      "incident_id": "INC-1024",
+      "tags": [
+        "remediation"
+      ],
+      "created_at": "2026-09-29T04:38:41.931679Z"
+    },
+    "node_ev_EV-INC-1024-01": {
+      "id": "node_ev_EV-INC-1024-01",
+      "type": "EVIDENCE",
+      "label": "Evidence: config_snapshot_customer-data-bucket.json",
+      "details": {
+        "type": "Configuration Snapshot",
+        "sha256": "73c1300867865e39...",
+        "description": "Automated configuration scan showing public access state on customer-data-bucket."
+      },
+      "incident_id": "INC-1024",
+      "tags": [
+        "evidence",
+        "configuration snapshot"
+      ],
+      "created_at": "2026-09-29T04:38:41.931685Z"
+    },
+    "node_ev_EV-INC-1024-02": {
+      "id": "node_ev_EV-INC-1024-02",
+      "type": "EVIDENCE",
+      "label": "Evidence: security_finding_INC-1024.log",
+      "details": {
+        "type": "Security Scanner Finding",
+        "sha256": "c1b63075e79658d5...",
+        "description": "Security Hub / CSPM finding triggering the initial incident alert."
+      },
+      "incident_id": "INC-1024",
+      "tags": [
+        "evidence",
+        "security scanner finding"
+      ],
+      "created_at": "2026-09-29T04:38:41.931690Z"
+    },
+    "node_ev_EV-INC-1024-03": {
+      "id": "node_ev_EV-INC-1024-03",
+      "type": "EVIDENCE",
+      "label": "Evidence: cloudtrail_audit_extract_INC-1024.log",
+      "details": {
+        "type": "Audit & Access Log",
+        "sha256": "5932d389684c706b...",
+        "description": "Access logs capturing exposure timeline and subsequent remediation confirmation."
+      },
+      "incident_id": "INC-1024",
+      "tags": [
+        "evidence",
+        "audit & access log"
+      ],
+      "created_at": "2026-09-29T04:38:41.931695Z"
+    },
+    "node_inc_INC-1012": {
+      "id": "node_inc_INC-1012",
+      "type": "INCIDENT",
+      "label": "INC-1012: Unrestricted SSH Port 22 Ingress",
+      "details": {
+        "incident_id": "INC-1012",
+        "severity": "HIGH",
+        "asset": "prod-bastion-sg",
+        "status": "REMEDIATED"
+      },
+      "incident_id": "INC-1012",
+      "tags": [
+        "incident",
+        "HIGH"
+      ],
+      "created_at": "2026-09-29T04:38:41.933702Z"
+    },
+    "node_rc_INC-1012": {
+      "id": "node_rc_INC-1012",
+      "type": "ROOT_CAUSE",
+      "label": "Root Cause (INC-1012): Permissive security group ingress rule allowi...",
+      "details": {
+        "full_text": "Permissive security group ingress rule allowing 0.0.0.0/0 on sensitive administrative port."
+      },
+      "incident_id": "INC-1012",
+      "tags": [
+        "root_cause"
+      ],
+      "created_at": "2026-09-29T04:38:41.933707Z"
+    },
+    "node_rem_INC-1012": {
+      "id": "node_rem_INC-1012",
+      "type": "REMEDIATION",
+      "label": "Playbook (INC-1012): 4 Actions",
+      "details": {
+        "steps": [
+          "Remove public access ACLs and apply PublicAccessBlock to 'prod-bastion-sg'.",
+          "Enable account-level S3 Block Public Access preventive protection.",
+          "Review IAM policies and revoke unauthorized wildcard principals."
+        ]
+      },
+      "incident_id": "INC-1012",
+      "tags": [
+        "remediation"
+      ],
+      "created_at": "2026-09-29T04:38:41.933715Z"
+    },
+    "node_ev_EV-INC-1012-01": {
+      "id": "node_ev_EV-INC-1012-01",
+      "type": "EVIDENCE",
+      "label": "Evidence: config_snapshot_prod-bastion-sg.json",
+      "details": {
+        "type": "Configuration Snapshot",
+        "sha256": "20eedbfa3479617e...",
+        "description": "Automated configuration scan showing public access state on prod-bastion-sg."
+      },
+      "incident_id": "INC-1012",
+      "tags": [
+        "evidence",
+        "configuration snapshot"
+      ],
+      "created_at": "2026-09-29T04:38:41.933720Z"
+    },
+    "node_ev_EV-INC-1012-02": {
+      "id": "node_ev_EV-INC-1012-02",
+      "type": "EVIDENCE",
+      "label": "Evidence: security_finding_INC-1012.log",
+      "details": {
+        "type": "Security Scanner Finding",
+        "sha256": "9967e78ed35a3a5d...",
+        "description": "Security Hub / CSPM finding triggering the initial incident alert."
+      },
+      "incident_id": "INC-1012",
+      "tags": [
+        "evidence",
+        "security scanner finding"
+      ],
+      "created_at": "2026-09-29T04:38:41.933724Z"
+    },
+    "node_ev_EV-INC-1012-03": {
+      "id": "node_ev_EV-INC-1012-03",
+      "type": "EVIDENCE",
+      "label": "Evidence: cloudtrail_audit_extract_INC-1012.log",
+      "details": {
+        "type": "Audit & Access Log",
+        "sha256": "63a9d2289ff9e09b...",
+        "description": "Access logs capturing exposure timeline and subsequent remediation confirmation."
+      },
+      "incident_id": "INC-1012",
+      "tags": [
+        "evidence",
+        "audit & access log"
+      ],
+      "created_at": "2026-09-29T04:38:41.933728Z"
+    },
+    "node_inc_INC-1018": {
+      "id": "node_inc_INC-1018",
+      "type": "INCIDENT",
+      "label": "INC-1018: Production Stripe API Secret Exposed in Logs",
+      "details": {
+        "incident_id": "INC-1018",
+        "severity": "CRITICAL",
+        "asset": "billing-service-worker",
+        "status": "REMEDIATED"
+      },
+      "incident_id": "INC-1018",
+      "tags": [
+        "incident",
+        "CRITICAL"
+      ],
+      "created_at": "2026-09-29T04:38:41.935651Z"
+    },
+    "node_rc_INC-1018": {
+      "id": "node_rc_INC-1018",
+      "type": "ROOT_CAUSE",
+      "label": "Root Cause (INC-1018): Misconfigured IAM authorization policy allowi...",
+      "details": {
+        "full_text": "Misconfigured IAM authorization policy allowing unauthenticated principal access."
+      },
+      "incident_id": "INC-1018",
+      "tags": [
+        "root_cause"
+      ],
+      "created_at": "2026-09-29T04:38:41.935656Z"
+    },
+    "node_rem_INC-1018": {
+      "id": "node_rem_INC-1018",
+      "type": "REMEDIATION",
+      "label": "Playbook (INC-1018): 4 Actions",
+      "details": {
+        "steps": [
+          "Remove public access ACLs and apply PublicAccessBlock to 'billing-service-worker'.",
+          "Enable account-level S3 Block Public Access preventive protection.",
+          "Review IAM policies and revoke unauthorized wildcard principals."
+        ]
+      },
+      "incident_id": "INC-1018",
+      "tags": [
+        "remediation"
+      ],
+      "created_at": "2026-09-29T04:38:41.935665Z"
+    },
+    "node_ev_EV-INC-1018-01": {
+      "id": "node_ev_EV-INC-1018-01",
+      "type": "EVIDENCE",
+      "label": "Evidence: config_snapshot_billing-service-worker.json",
+      "details": {
+        "type": "Configuration Snapshot",
+        "sha256": "11b0c1700cf4eead...",
+        "description": "Automated configuration scan showing public access state on billing-service-worker."
+      },
+      "incident_id": "INC-1018",
+      "tags": [
+        "evidence",
+        "configuration snapshot"
+      ],
+      "created_at": "2026-09-29T04:38:41.935669Z"
+    },
+    "node_ev_EV-INC-1018-02": {
+      "id": "node_ev_EV-INC-1018-02",
+      "type": "EVIDENCE",
+      "label": "Evidence: security_finding_INC-1018.log",
+      "details": {
+        "type": "Security Scanner Finding",
+        "sha256": "8e6292e0e32044b7...",
+        "description": "Security Hub / CSPM finding triggering the initial incident alert."
+      },
+      "incident_id": "INC-1018",
+      "tags": [
+        "evidence",
+        "security scanner finding"
+      ],
+      "created_at": "2026-09-29T04:38:41.935674Z"
+    },
+    "node_ev_EV-INC-1018-03": {
+      "id": "node_ev_EV-INC-1018-03",
+      "type": "EVIDENCE",
+      "label": "Evidence: cloudtrail_audit_extract_INC-1018.log",
+      "details": {
+        "type": "Audit & Access Log",
+        "sha256": "d74d2e0efb1e7b9f...",
+        "description": "Access logs capturing exposure timeline and subsequent remediation confirmation."
+      },
+      "incident_id": "INC-1018",
+      "tags": [
+        "evidence",
+        "audit & access log"
+      ],
+      "created_at": "2026-09-29T04:38:41.935677Z"
+    }
+  },
+  "links": [
+    {
+      "id": "link_INC-1024_rc",
+      "source": "node_inc_INC-1024",
+      "target": "node_rc_INC-1024",
+      "relationship": "CAUSED_BY",
+      "confidence": 1.0
+    },
+    {
+      "id": "link_INC-1024_ctrl_CC6.1",
+      "source": "node_inc_INC-1024",
+      "target": "node_ctrl_CC6.1",
+      "relationship": "VIOLATES_CONTROL",
+      "confidence": 1.0
+    },
+    {
+      "id": "link_INC-1024_ctrl_CC6.3",
+      "source": "node_inc_INC-1024",
+      "target": "node_ctrl_CC6.3",
+      "relationship": "VIOLATES_CONTROL",
+      "confidence": 1.0
+    },
+    {
+      "id": "link_INC-1024_ctrl_PR.AC-3",
+      "source": "node_inc_INC-1024",
+      "target": "node_ctrl_PR.AC-3",
+      "relationship": "VIOLATES_CONTROL",
+      "confidence": 1.0
+    },
+    {
+      "id": "link_INC-1024_ctrl_CC6.7",
+      "source": "node_inc_INC-1024",
+      "target": "node_ctrl_CC6.7",
+      "relationship": "VIOLATES_CONTROL",
+      "confidence": 1.0
+    },
+    {
+      "id": "link_INC-1024_ctrl_PR.DS-1",
+      "source": "node_inc_INC-1024",
+      "target": "node_ctrl_PR.DS-1",
+      "relationship": "VIOLATES_CONTROL",
+      "confidence": 1.0
+    },
+    {
+      "id": "link_INC-1024_ctrl_CC7.2",
+      "source": "node_inc_INC-1024",
+      "target": "node_ctrl_CC7.2",
+      "relationship": "VIOLATES_CONTROL",
+      "confidence": 1.0
+    },
+    {
+      "id": "link_INC-1024_rem",
+      "source": "node_inc_INC-1024",
+      "target": "node_rem_INC-1024",
+      "relationship": "RESOLVED_BY",
+      "confidence": 1.0
+    },
+    {
+      "id": "link_INC-1024_ev_EV-INC-1024-01",
+      "source": "node_inc_INC-1024",
+      "target": "node_ev_EV-INC-1024-01",
+      "relationship": "EVIDENCED_BY",
+      "confidence": 1.0
+    },
+    {
+      "id": "link_INC-1024_ev_EV-INC-1024-02",
+      "source": "node_inc_INC-1024",
+      "target": "node_ev_EV-INC-1024-02",
+      "relationship": "EVIDENCED_BY",
+      "confidence": 1.0
+    },
+    {
+      "id": "link_INC-1024_ev_EV-INC-1024-03",
+      "source": "node_inc_INC-1024",
+      "target": "node_ev_EV-INC-1024-03",
+      "relationship": "EVIDENCED_BY",
+      "confidence": 1.0
+    },
+    {
+      "id": "link_INC-1012_rc",
+      "source": "node_inc_INC-1012",
+      "target": "node_rc_INC-1012",
+      "relationship": "CAUSED_BY",
+      "confidence": 1.0
+    },
+    {
+      "id": "link_INC-1012_ctrl_CC7.2",
+      "source": "node_inc_INC-1012",
+      "target": "node_ctrl_CC7.2",
+      "relationship": "VIOLATES_CONTROL",
+      "confidence": 1.0
+    },
+    {
+      "id": "link_INC-1012_rem",
+      "source": "node_inc_INC-1012",
+      "target": "node_rem_INC-1012",
+      "relationship": "RESOLVED_BY",
+      "confidence": 1.0
+    },
+    {
+      "id": "link_INC-1012_ev_EV-INC-1012-01",
+      "source": "node_inc_INC-1012",
+      "target": "node_ev_EV-INC-1012-01",
+      "relationship": "EVIDENCED_BY",
+      "confidence": 1.0
+    },
+    {
+      "id": "link_INC-1012_ev_EV-INC-1012-02",
+      "source": "node_inc_INC-1012",
+      "target": "node_ev_EV-INC-1012-02",
+      "relationship": "EVIDENCED_BY",
+      "confidence": 1.0
+    },
+    {
+      "id": "link_INC-1012_ev_EV-INC-1012-03",
+      "source": "node_inc_INC-1012",
+      "target": "node_ev_EV-INC-1012-03",
+      "relationship": "EVIDENCED_BY",
+      "confidence": 1.0
+    },
+    {
+      "id": "link_INC-1018_rc",
+      "source": "node_inc_INC-1018",
+      "target": "node_rc_INC-1018",
+      "relationship": "CAUSED_BY",
+      "confidence": 1.0
+    },
+    {
+      "id": "link_INC-1018_ctrl_CC6.7",
+      "source": "node_inc_INC-1018",
+      "target": "node_ctrl_CC6.7",
+      "relationship": "VIOLATES_CONTROL",
+      "confidence": 1.0
+    },
+    {
+      "id": "link_INC-1018_ctrl_PR.DS-1",
+      "source": "node_inc_INC-1018",
+      "target": "node_ctrl_PR.DS-1",
+      "relationship": "VIOLATES_CONTROL",
+      "confidence": 1.0
+    },
+    {
+      "id": "link_INC-1018_ctrl_CC7.2",
+      "source": "node_inc_INC-1018",
+      "target": "node_ctrl_CC7.2",
+      "relationship": "VIOLATES_CONTROL",
+      "confidence": 1.0
+    },
+    {
+      "id": "link_INC-1018_rem",
+      "source": "node_inc_INC-1018",
+      "target": "node_rem_INC-1018",
+      "relationship": "RESOLVED_BY",
+      "confidence": 1.0
+    },
+    {
+      "id": "link_INC-1018_ev_EV-INC-1018-01",
+      "source": "node_inc_INC-1018",
+      "target": "node_ev_EV-INC-1018-01",
+      "relationship": "EVIDENCED_BY",
+      "confidence": 1.0
+    },
+    {
+      "id": "link_INC-1018_ev_EV-INC-1018-02",
+      "source": "node_inc_INC-1018",
+      "target": "node_ev_EV-INC-1018-02",
+      "relationship": "EVIDENCED_BY",
+      "confidence": 1.0
+    },
+    {
+      "id": "link_INC-1018_ev_EV-INC-1018-03",
+      "source": "node_inc_INC-1018",
+      "target": "node_ev_EV-INC-1018-03",
+      "relationship": "EVIDENCED_BY",
+      "confidence": 1.0
+    }
+  ]
+}
